@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<StackPane prefHeight="500.0" prefWidth="800.0" styleClass="login-background"
+            xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controllers.LoginController">
+    <children>
+
+        <VBox alignment="CENTER" maxHeight="400.0" maxWidth="400.0"
+              spacing="20.0" styleClass="login-panel">
+            <children>
+                <Text styleClass="login-title" text="Sistema de Facturacion">
+                    <font><Font size="28.0" /></font>
+                </Text>
+
+                <Text styleClass="login-subtitle" text="Iniciar Sesion">
+                    <font><Font size="18.0" /></font>
+                </Text>
+
+                <TextField fx:id="txtUsuario" promptText="Usuario" styleClass="login-field" />
+                <PasswordField fx:id="txtContrasena" promptText="Contrasena" styleClass="login-field" />
+
+                <Button fx:id="btnIniciarSesion" mnemonicParsing="false"
+                        onAction="#handleIniciarSesion" prefWidth="200.0"
+                        styleClass="btn-primary" text="Iniciar Sesion" />
+
+                <Hyperlink fx:id="linkRegistrarse" onAction="#handleRegistrarse"
+                           text="Crear una cuenta nueva" />
+            </children>
+        </VBox>
+    </children>
+</StackPane>

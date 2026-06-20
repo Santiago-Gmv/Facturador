@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane styleClass="dashboard-background"
+            xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controllers.AdminController">
+
+    <top>
+        <HBox alignment="CENTER_LEFT" prefHeight="50.0" styleClass="top-bar">
+            <children>
+                <Text fx:id="lblTitulo" text="Panel de Administracion" styleClass="top-bar-title">
+                    <font><Font size="18.0" /></font>
+                </Text>
+                <Region HBox.hgrow="ALWAYS" />
+                <Label fx:id="lblUsuario" styleClass="top-bar-user" />
+                <Button fx:id="btnCerrarSesion" mnemonicParsing="false"
+                        onAction="#handleCerrarSesion" styleClass="btn-logout" text="Cerrar Sesion" />
+            </children>
+        </HBox>
+    </top>
+
+    <left>
+        <VBox prefWidth="200.0" spacing="5.0" styleClass="sidebar" alignment="TOP_CENTER">
+            <children>
+                <Text styleClass="sidebar-title" text="Menu">
+                    <font><Font size="16.0" /></font>
+                </Text>
+                <Button fx:id="btnUsuarios" mnemonicParsing="false"
+                        onAction="#mostrarUsuarios" prefWidth="180.0" text="Usuarios" />
+                <Button fx:id="btnClientes" mnemonicParsing="false"
+                        onAction="#mostrarClientes" prefWidth="180.0" text="Clientes" />
+                <Button fx:id="btnProveedores" mnemonicParsing="false"
+                        onAction="#mostrarProveedores" prefWidth="180.0" text="Proveedores" />
+                <Button fx:id="btnProductos" mnemonicParsing="false"
+                        onAction="#mostrarProductos" prefWidth="180.0" text="Productos" />
+                <Button fx:id="btnFacturacion" mnemonicParsing="false"
+                        onAction="#mostrarFacturacion" prefWidth="180.0" text="Facturacion" />
+                <Button fx:id="btnHistorial" mnemonicParsing="false"
+                        onAction="#mostrarHistorial" prefWidth="180.0" text="Historial Facturas" />
+                <Button fx:id="btnEstadisticas" mnemonicParsing="false"
+                        onAction="#mostrarEstadisticas" prefWidth="180.0" text="Estadisticas" />
+                <Button fx:id="btnMovimientos" mnemonicParsing="false"
+                        onAction="#mostrarMovimientos" prefWidth="180.0" text="Mov. Deposito" />
+            </children>
+        </VBox>
+    </left>
+
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="scroll-pane">
+            <VBox fx:id="contenidoPrincipal" spacing="0" minHeight="0" styleClass="content-panel">
+                <children>
+
+                    <VBox fx:id="panelBienvenida" alignment="CENTER" visible="true">
+                        <children>
+                            <Text text="Bienvenido al Sistema de Facturacion" styleClass="welcome-text" />
+                            <Text text="Seleccione una opcion del menu lateral" styleClass="welcome-subtext" />
+                        </children>
+                    </VBox>
+
+                    <VBox fx:id="panelUsuarios" spacing="10.0" visible="false" managed="false" VBox.vgrow="ALWAYS">
+                        <children>
+                            <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                <Text text="Usuarios" styleClass="panel-title" />
+                                <Region HBox.hgrow="ALWAYS" />
+                                <TextField fx:id="txtBuscarUsuario" promptText="Buscar..." prefWidth="200.0"
+                                           onKeyReleased="#filtrarUsuarios" />
+                                <Button mnemonicParsing="false" onAction="#handleNuevoUsuario"
+                                        styleClass="btn-primary" text="Nuevo" />
+                            </HBox>
+                            <TableView fx:id="tablaUsuarios" VBox.vgrow="ALWAYS" prefHeight="400.0">
+                                <columns>
+                                    <TableColumn fx:id="colUsuarioId" text="ID" prefWidth="50" />
+                                    <TableColumn fx:id="colUsuarioNombre" text="Nombre" prefWidth="120" />
+                                    <TableColumn fx:id="colUsuarioApellido" text="Apellido" prefWidth="120" />
+                                    <TableColumn fx:id="colUsuarioUsuario" text="Usuario" prefWidth="120" />
+                                    <TableColumn fx:id="colUsuarioTelefono" text="Telefono" prefWidth="120" />
+                                    <TableColumn fx:id="colUsuarioEmail" text="Email" prefWidth="150" />
+                                    <TableColumn fx:id="colUsuarioRol" text="Rol" prefWidth="100" />
+                                    <TableColumn fx:id="colUsuarioActivo" text="Estado" prefWidth="80" />
+                                </columns>
+                            </TableView>
+                            <HBox alignment="CENTER_RIGHT" spacing="10.0">
+                                <Button mnemonicParsing="false" onAction="#handleEditarUsuario"
+                                        styleClass="btn-secondary" text="Editar" />
+                                <Button mnemonicParsing="false" onAction="#handleEliminarUsuario"
+                                        styleClass="btn-danger" text="Eliminar" />
+                            </HBox>
+                        </children>
+                    </VBox>
+
+                    <VBox fx:id="panelClientes" spacing="10.0" visible="false" managed="false" VBox.vgrow="ALWAYS">
+                        <children>
+                            <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                <Text text="Clientes" styleClass="panel-title" />
+                                <Region HBox.hgrow="ALWAYS" />
+                                <TextField fx:id="txtBuscarCliente" promptText="Buscar..." prefWidth="200.0"
+                                           onKeyReleased="#filtrarClientes" />
+                                <Button mnemonicParsing="false" onAction="#handleNuevoCliente"
+                                        styleClass="btn-primary" text="Nuevo" />
+                            </HBox>
+                            <TableView fx:id="tablaClientes" VBox.vgrow="ALWAYS" prefHeight="400.0">
+                                <columns>
+                                    <TableColumn fx:id="colClienteId" text="ID" prefWidth="50" />
+                                    <TableColumn fx:id="colClienteNombre" text="Nombre" prefWidth="100" />
+                                    <TableColumn fx:id="colClienteApellido" text="Apellido" prefWidth="100" />
+                                    <TableColumn fx:id="colClienteDNI" text="DNI" prefWidth="100" />
+                                    <TableColumn fx:id="colClienteTelefono" text="Telefono" prefWidth="100" />
+                                    <TableColumn fx:id="colClienteEmail" text="Email" prefWidth="150" />
+                                    <TableColumn fx:id="colClienteDireccion" text="Direccion" prefWidth="150" />
+                                </columns>
+                            </TableView>
+                            <HBox alignment="CENTER_RIGHT" spacing="10.0">
+                                <Button mnemonicParsing="false" onAction="#handleEditarCliente"
+                                        styleClass="btn-secondary" text="Editar" />
+                                <Button mnemonicParsing="false" onAction="#handleEliminarCliente"
+                                        styleClass="btn-danger" text="Eliminar" />
+                            </HBox>
+                        </children>
+                    </VBox>
+
+                    <VBox fx:id="panelProveedores" spacing="10.0" visible="false" managed="false" VBox.vgrow="ALWAYS">
+                        <children>
+                            <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                <Text text="Proveedores" styleClass="panel-title" />
+                                <Region HBox.hgrow="ALWAYS" />
+                                <TextField fx:id="txtBuscarProveedor" promptText="Buscar..." prefWidth="200.0"
+                                           onKeyReleased="#filtrarProveedores" />
+                                <Button mnemonicParsing="false" onAction="#handleNuevoProveedor"
+                                        styleClass="btn-primary" text="Nuevo" />
+                            </HBox>
+                            <TableView fx:id="tablaProveedores" VBox.vgrow="ALWAYS" prefHeight="400.0">
+                                <columns>
+                                    <TableColumn fx:id="colProveedorId" text="ID" prefWidth="50" />
+                                    <TableColumn fx:id="colProveedorEmpresa" text="Empresa" prefWidth="150" />
+                                    <TableColumn fx:id="colProveedorContacto" text="Contacto" prefWidth="120" />
+                                    <TableColumn fx:id="colProveedorTelefono" text="Telefono" prefWidth="120" />
+                                    <TableColumn fx:id="colProveedorEmail" text="Email" prefWidth="150" />
+                                    <TableColumn fx:id="colProveedorDireccion" text="Direccion" prefWidth="150" />
+                                </columns>
+                            </TableView>
+                            <HBox alignment="CENTER_RIGHT" spacing="10.0">
+                                <Button mnemonicParsing="false" onAction="#handleEditarProveedor"
+                                        styleClass="btn-secondary" text="Editar" />
+                                <Button mnemonicParsing="false" onAction="#handleEliminarProveedor"
+                                        styleClass="btn-danger" text="Eliminar" />
+                            </HBox>
+                        </children>
+                    </VBox>
+
+                    <VBox fx:id="panelProductos" spacing="10.0" visible="false" managed="false" VBox.vgrow="ALWAYS">
+                        <children>
+                            <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                <Text text="Productos" styleClass="panel-title" />
+                                <Region HBox.hgrow="ALWAYS" />
+                                <TextField fx:id="txtBuscarProducto" promptText="Buscar..." prefWidth="200.0"
+                                           onKeyReleased="#filtrarProductos" />
+                                <Button mnemonicParsing="false" onAction="#handleNuevoProducto"
+                                        styleClass="btn-primary" text="Nuevo" />
+                            </HBox>
+                            <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+                                <TableView fx:id="tablaProductos" prefHeight="400.0">
+                                    <columns>
+                                        <TableColumn fx:id="colProductoCodigo" text="Codigo" prefWidth="80" />
+                                        <TableColumn fx:id="colProductoNombre" text="Nombre" prefWidth="130" />
+                                        <TableColumn fx:id="colProductoCategoria" text="Categoria" prefWidth="100" />
+                                        <TableColumn fx:id="colProductoPrecioCompra" text="P. Compra" prefWidth="90" />
+                                        <TableColumn fx:id="colProductoPrecioVenta" text="P. Venta" prefWidth="90" />
+                                        <TableColumn fx:id="colProductoDescuento" text="Dto. %" prefWidth="60" />
+                                        <TableColumn fx:id="colProductoStock" text="Stock" prefWidth="60" />
+                                        <TableColumn fx:id="colProductoStockMin" text="Stock Min" prefWidth="70" />
+                                        <TableColumn fx:id="colProductoProveedor" text="Proveedor" prefWidth="120" />
+                                        <TableColumn fx:id="colProductoEstado" text="Estado" prefWidth="70" />
+                                    </columns>
+                                </TableView>
+                            </ScrollPane>
+                            <HBox alignment="CENTER_RIGHT" spacing="10.0">
+                                <Button mnemonicParsing="false" onAction="#handleEditarProducto"
+                                        styleClass="btn-secondary" text="Editar" />
+                            </HBox>
+                        </children>
+                    </VBox>
+
+                    <VBox fx:id="panelFacturacion" spacing="10.0" visible="false" managed="false" VBox.vgrow="ALWAYS">
+                        <children>
+                            <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                <Text text="Facturacion" styleClass="panel-title" />
+                                <Region HBox.hgrow="ALWAYS" />
+                                <Label text="Fecha:" />
+                                <Label fx:id="lblFechaActual" />
+                                <Label text="Hora:" />
+                                <Label fx:id="lblHoraActual" />
+                            </HBox>
+
+                            <HBox spacing="10.0" alignment="CENTER_LEFT">
+                                <Label text="Cliente:" />
+                                <ComboBox fx:id="cmbClienteFactura" prefWidth="400.0" visibleRowCount="6" />
+                            </HBox>
+
+                            <HBox spacing="10.0" alignment="CENTER_LEFT">
+                                <Label text="Producto:" />
+                                <TextField fx:id="txtBuscarProductoFactura" promptText="Buscar producto..."
+                                           prefWidth="200.0" onKeyReleased="#buscarProductoFactura" />
+                                <ComboBox fx:id="cmbProductoFactura" prefWidth="300.0" visibleRowCount="8" />
+                                <Label text="Cant:" />
+                                <TextField fx:id="txtCantidadFactura" prefWidth="60.0" text="1" />
+                                <Button mnemonicParsing="false" onAction="#agregarProductoFactura"
+                                        styleClass="btn-primary" text="Agregar" />
+                            </HBox>
+
+                            <TableView fx:id="tablaDetalleFactura" prefHeight="400.0" VBox.vgrow="ALWAYS">
+                                <columns>
+                                    <TableColumn fx:id="colDetCodigo" text="Codigo" prefWidth="80" />
+                                    <TableColumn fx:id="colDetNombre" text="Producto" prefWidth="150" />
+                                    <TableColumn fx:id="colDetCantidad" text="Cant" prefWidth="50" />
+                                    <TableColumn fx:id="colDetPrecio" text="Precio" prefWidth="80" />
+                                    <TableColumn fx:id="colDetDescuento" text="Dto %" prefWidth="60" />
+                                    <TableColumn fx:id="colDetSubtotal" text="Subtotal" prefWidth="80" />
+                                </columns>
+                            </TableView>
+
+                            <HBox alignment="CENTER_RIGHT" spacing="15.0">
+                                <Label text="Subtotal:" />
+                                <Label fx:id="lblSubtotal" text="0.00" styleClass="label-total" />
+                                <Label text="Descuento Global:" />
+                                <ComboBox fx:id="cmbDescuentoGlobal" prefWidth="100.0" />
+                                <Label text="IVA:" />
+                                <ComboBox fx:id="cmbIVA" prefWidth="80.0" />
+                                <Label fx:id="lblIVA" text="0.00" styleClass="label-total" />
+                                <Label text="TOTAL:" />
+                                <Label fx:id="lblTotal" text="0.00" styleClass="label-total-grande" />
+                            </HBox>
+
+                            <HBox alignment="CENTER_RIGHT" spacing="10.0">
+                                <Button mnemonicParsing="false" onAction="#eliminarProductoFactura"
+                                        styleClass="btn-danger" text="Eliminar Producto" />
+                                <Button mnemonicParsing="false" onAction="#handleEmitirFactura"
+                                        styleClass="btn-primary" text="Emitir Factura" />
+                            </HBox>
+                        </children>
+                    </VBox>
+
+                    <VBox fx:id="panelHistorial" spacing="10.0" visible="false" managed="false" VBox.vgrow="ALWAYS">
+                        <children>
+                            <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                <Text text="Historial de Facturas" styleClass="panel-title" />
+                                <Region HBox.hgrow="ALWAYS" />
+                                <TextField fx:id="txtBuscarFactura" promptText="Buscar..." prefWidth="200.0"
+                                           onKeyReleased="#filtrarFacturas" />
+                            </HBox>
+                            <TableView fx:id="tablaFacturas" VBox.vgrow="ALWAYS" prefHeight="400.0">
+                                <columns>
+                                    <TableColumn fx:id="colFacturaNumero" text="Nro Factura" prefWidth="100" />
+                                    <TableColumn fx:id="colFacturaFecha" text="Fecha" prefWidth="100" />
+                                    <TableColumn fx:id="colFacturaHora" text="Hora" prefWidth="70" />
+                                    <TableColumn fx:id="colFacturaVendedor" text="Vendedor" prefWidth="120" />
+                                    <TableColumn fx:id="colFacturaCliente" text="Cliente" prefWidth="150" />
+                                    <TableColumn fx:id="colFacturaTotal" text="Total" prefWidth="100" />
+                                    <TableColumn fx:id="colFacturaEstado" text="Estado" prefWidth="80" />
+                                </columns>
+                            </TableView>
+                            <HBox alignment="CENTER_RIGHT" spacing="10.0">
+                                <Button mnemonicParsing="false" onAction="#handleExportarPDF"
+                                        styleClass="btn-secondary" text="Exportar PDF" />
+                            </HBox>
+                        </children>
+                    </VBox>
+
+                    <VBox fx:id="panelEstadisticas" spacing="10.0" visible="false" managed="false">
+                        <children>
+                            <Text text="Estadisticas" styleClass="panel-title" />
+                            <HBox spacing="20.0" alignment="CENTER">
+                                <VBox styleClass="stat-card" alignment="CENTER" spacing="10.0"
+                                      prefWidth="200.0" prefHeight="120.0">
+                                    <Text text="Total Facturas" styleClass="stat-label" />
+                                    <Text fx:id="lblTotalFacturas" text="0" styleClass="stat-value" />
+                                </VBox>
+                                <VBox styleClass="stat-card" alignment="CENTER" spacing="10.0"
+                                      prefWidth="200.0" prefHeight="120.0">
+                                    <Text text="Total Ventas" styleClass="stat-label" />
+                                    <Text fx:id="lblTotalVentas" text="0.00" styleClass="stat-value" />
+                                </VBox>
+                                <VBox styleClass="stat-card" alignment="CENTER" spacing="10.0"
+                                      prefWidth="200.0" prefHeight="120.0">
+                                    <Text text="Total Clientes" styleClass="stat-label" />
+                                    <Text fx:id="lblTotalClientes" text="0" styleClass="stat-value" />
+                                </VBox>
+                                <VBox styleClass="stat-card" alignment="CENTER" spacing="10.0"
+                                      prefWidth="200.0" prefHeight="120.0">
+                                    <Text text="Stock Bajo" styleClass="stat-label" />
+                                    <Text fx:id="lblTotalBajoStock" text="0" styleClass="stat-value" />
+                                </VBox>
+                            </HBox>
+                        </children>
+                    </VBox>
+
+                    <VBox fx:id="panelMovimientos" spacing="10.0" visible="false" managed="false" VBox.vgrow="ALWAYS">
+                        <children>
+                            <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                <Text text="Movimientos de Deposito" styleClass="panel-title" />
+                                <Region HBox.hgrow="ALWAYS" />
+                                <TextField fx:id="txtBuscarMovimiento" promptText="Buscar..." prefWidth="200.0"
+                                           onKeyReleased="#filtrarMovimientos" />
+                            </HBox>
+                            <TableView fx:id="tablaMovimientos" VBox.vgrow="ALWAYS" prefHeight="400.0">
+                                <columns>
+                                    <TableColumn fx:id="colMovId" text="ID" prefWidth="50" />
+                                    <TableColumn fx:id="colMovFecha" text="Fecha" prefWidth="100" />
+                                    <TableColumn fx:id="colMovHora" text="Hora" prefWidth="70" />
+                                    <TableColumn fx:id="colMovUsuario" text="Usuario" prefWidth="120" />
+                                    <TableColumn fx:id="colMovTipo" text="Tipo" prefWidth="80" />
+                                    <TableColumn fx:id="colMovProducto" text="Producto" prefWidth="150" />
+                                    <TableColumn fx:id="colMovCantidad" text="Cantidad" prefWidth="70" />
+                                    <TableColumn fx:id="colMovObservacion" text="Observacion" prefWidth="150" />
+                                </columns>
+                            </TableView>
+                        </children>
+                    </VBox>
+
+                </children>
+            </VBox>
+        </ScrollPane>
+    </center>
+
+</BorderPane>

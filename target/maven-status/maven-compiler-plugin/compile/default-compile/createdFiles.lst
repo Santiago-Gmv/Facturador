@@ -1,0 +1,15 @@
+models/Producto.class
+models/Usuario.class
+utils/Validaciones.class
+models/MovimientoDeposito.class
+controllers/AdminController.class
+controllers/RegistroController.class
+controllers/LoginController.class
+controllers/DepositoController.class
+models/DetalleFactura.class
+controllers/VendedorController.class
+app/Main.class
+models/Cliente.class
+models/Factura.class
+models/Proveedor.class
+database/ConexionDB.class

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane styleClass="dashboard-background"
+            xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controllers.DepositoController">
+
+    <top>
+        <HBox alignment="CENTER_LEFT" prefHeight="50.0" styleClass="top-bar">
+            <children>
+                <Text text="Panel de Deposito" styleClass="top-bar-title">
+                    <font><Font size="18.0" /></font>
+                </Text>
+                <Region HBox.hgrow="ALWAYS" />
+                <Label fx:id="lblUsuario" styleClass="top-bar-user" />
+                <Button mnemonicParsing="false" onAction="#handleCerrarSesion"
+                        styleClass="btn-logout" text="Cerrar Sesion" />
+            </children>
+        </HBox>
+    </top>
+
+    <left>
+        <VBox prefWidth="200.0" spacing="5.0" styleClass="sidebar" alignment="TOP_CENTER">
+            <children>
+                <Text styleClass="sidebar-title" text="Menu">
+                    <font><Font size="16.0" /></font>
+                </Text>
+                <Button mnemonicParsing="false" onAction="#mostrarIngreso"
+                        prefWidth="180.0" text="Ingreso Mercaderia" />
+                <Button mnemonicParsing="false" onAction="#mostrarEgreso"
+                        prefWidth="180.0" text="Egreso Mercaderia" />
+                <Button mnemonicParsing="false" onAction="#mostrarHistorial"
+                        prefWidth="180.0" text="Historial Movimientos" />
+                <Button mnemonicParsing="false" onAction="#mostrarStock"
+                        prefWidth="180.0" text="Stock Actual" />
+            </children>
+        </VBox>
+    </left>
+
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="scroll-pane">
+            <VBox fx:id="contenidoPrincipal" spacing="0" minHeight="0" styleClass="content-panel">
+                <children>
+
+                    <VBox fx:id="panelBienvenida" alignment="CENTER" visible="true">
+                        <children>
+                            <Text text="Bienvenido al Panel de Deposito" styleClass="welcome-text" />
+                            <Text text="Seleccione una opcion del menu" styleClass="welcome-subtext" />
+                        </children>
+                    </VBox>
+
+                    <VBox fx:id="panelIngreso" spacing="15.0" visible="false" managed="false" alignment="TOP_CENTER">
+                        <children>
+                            <Text text="Ingreso de Mercaderia" styleClass="panel-title" />
+                            <GridPane hgap="10.0" vgap="10.0" maxWidth="500.0">
+                                <children>
+                                    <Label text="Producto:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                                    <ComboBox fx:id="cmbProductoIngreso" prefWidth="350.0"
+                                              GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+                                    <Label text="Cantidad:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                                    <TextField fx:id="txtCantidadIngreso" prefWidth="150.0"
+                                               GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+                                    <Label text="Observacion:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                                    <TextField fx:id="txtObservacionIngreso" prefWidth="350.0"
+                                               GridPane.rowIndex="2" GridPane.columnIndex="1" />
+                                </children>
+                            </GridPane>
+                            <Button mnemonicParsing="false" onAction="#handleRegistrarIngreso"
+                                    styleClass="btn-primary" text="Registrar Ingreso" />
+                            <Button mnemonicParsing="false" onAction="#handleNuevoProducto"
+                                    styleClass="btn-secondary" text="+ Nuevo Producto" />
+                        </children>
+                    </VBox>
+
+                    <VBox fx:id="panelEgreso" spacing="15.0" visible="false" managed="false" alignment="TOP_CENTER">
+                        <children>
+                            <Text text="Egreso de Mercaderia" styleClass="panel-title" />
+                            <GridPane hgap="10.0" vgap="10.0" maxWidth="500.0">
+                                <children>
+                                    <Label text="Producto:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+                                    <ComboBox fx:id="cmbProductoEgreso" prefWidth="350.0"
+                                              GridPane.rowIndex="0" GridPane.columnIndex="1" />
+
+                                    <Label text="Cantidad:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+                                    <TextField fx:id="txtCantidadEgreso" prefWidth="150.0"
+                                               GridPane.rowIndex="1" GridPane.columnIndex="1" />
+
+                                    <Label text="Observacion:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                                    <TextField fx:id="txtObservacionEgreso" prefWidth="350.0"
+                                               GridPane.rowIndex="2" GridPane.columnIndex="1" />
+                                </children>
+                            </GridPane>
+                            <Button mnemonicParsing="false" onAction="#handleRegistrarEgreso"
+                                    styleClass="btn-primary" text="Registrar Egreso" />
+                        </children>
+                    </VBox>
+
+                    <VBox fx:id="panelHistorial" spacing="10.0" visible="false" managed="false" VBox.vgrow="ALWAYS">
+                        <children>
+                            <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                <Text text="Historial de Movimientos" styleClass="panel-title" />
+                                <Region HBox.hgrow="ALWAYS" />
+                                <TextField fx:id="txtBuscarMovimiento" promptText="Buscar..." prefWidth="200.0"
+                                           onKeyReleased="#filtrarMovimientos" />
+                            </HBox>
+                            <TableView fx:id="tablaMovimientos" VBox.vgrow="ALWAYS" prefHeight="400.0">
+                                <columns>
+                                    <TableColumn fx:id="colMovFecha" text="Fecha" prefWidth="100" />
+                                    <TableColumn fx:id="colMovHora" text="Hora" prefWidth="70" />
+                                    <TableColumn fx:id="colMovTipo" text="Tipo" prefWidth="80" />
+                                    <TableColumn fx:id="colMovProducto" text="Producto" prefWidth="200" />
+                                    <TableColumn fx:id="colMovCantidad" text="Cantidad" prefWidth="80" />
+                                    <TableColumn fx:id="colMovObservacion" text="Observacion" prefWidth="200" />
+                                </columns>
+                            </TableView>
+                        </children>
+                    </VBox>
+
+                    <VBox fx:id="panelStock" spacing="10.0" visible="false" managed="false" VBox.vgrow="ALWAYS">
+                        <children>
+                            <HBox alignment="CENTER_LEFT" spacing="10.0">
+                                <Text text="Stock Actual" styleClass="panel-title" />
+                                <Region HBox.hgrow="ALWAYS" />
+                                <TextField fx:id="txtBuscarStock" promptText="Buscar..." prefWidth="200.0"
+                                           onKeyReleased="#filtrarStock" />
+                            </HBox>
+                            <TableView fx:id="tablaStock" VBox.vgrow="ALWAYS" prefHeight="400.0">
+                                <columns>
+                                    <TableColumn fx:id="colStockCodigo" text="Codigo" prefWidth="100" />
+                                    <TableColumn fx:id="colStockNombre" text="Producto" prefWidth="200" />
+                                    <TableColumn fx:id="colStockCategoria" text="Categoria" prefWidth="120" />
+                                    <TableColumn fx:id="colStockActual" text="Stock Actual" prefWidth="100" />
+                                    <TableColumn fx:id="colStockMinimo" text="Stock Minimo" prefWidth="100" />
+                                </columns>
+                            </TableView>
+                        </children>
+                    </VBox>
+
+                </children>
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>
